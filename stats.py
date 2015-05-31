@@ -1,53 +1,56 @@
 """This is the main module with a lot of statistical functions."""
 
-def mean(*args):
-    """Returns the mean of args.
+def mean(data):
+    """Returns the mean of data.
 
-    *args -- sequence to unpack or separate numerical arguments
-    >>> mean(1,2,3)
+    data -- a sequence of numerical arguments
+    >>> mean((1,2,3))
     2.0
-    >>> mean(*[-3,-4,-8])
+    >>> mean([-3,-4,-8])
     -5.0
-    >>> mean(*range(1001))
+    >>> mean(range(1001))
     500.0
     >>> mean()
     Traceback (most recent call last):
-    TypeError: needs at least one argument
+    TypeError: mean() missing 1 required positional argument: 'data'
     >>> mean('string')
     Traceback (most recent call last):
     TypeError: unsupported operand type(s) for +=: 'int' and 'str'
     """
     try:
         running_sum = 0
-        for x in args:
+        for x in data:
             running_sum += x
-        return running_sum/len(args)
+        return running_sum/len(data)
     except ZeroDivisionError:
         raise TypeError("needs at least one argument")
 
-def median(*args):
-    """Returns the median of args.
+def median(data):
+    """Returns the median of data.
 
-    *args -- sequence to unpack or separate numerical arguments
-    >>> median(0,2,3,10)
+    data -- sequence to unpack or separate numerical arguments
+    >>> median((0,2,3,10))
     2.5
-    >>> median(13,42,666)
+    >>> median([13,42,666])
     42
-    >>> median('a string', 'string', 'a string')
+    >>> median(['a string', 'string', 'a string'])
     'a string'
     >>> median()
     Traceback (most recent call last):
-    TypeError: needs at least one argument
+    TypeError: median() missing 1 required positional argument: 'data'
     """
     try:
-        args = sorted(list(args))
-        n = len(args)
+        data = sorted(list(data))
+        n = len(data)
         if n%2==0:
-            return (args[(n//2)-1]+args[n//2])/2
+            return (data[(n//2)-1]+data[n//2])/2
         else:
-            return args[n//2]
+            return data[n//2]
     except IndexError:
         raise TypeError("needs at least one argument")
+
+def mode(*data):
+    raise NotImplementedError
 
 if __name__ == "__main__":
     import doctest
