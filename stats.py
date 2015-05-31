@@ -52,6 +52,30 @@ def median(data):
 def mode(*data):
     raise NotImplementedError
 
+def variance_p(data):
+    """Returns the population variance.
+
+    >>> variance_p([1,3,5,7,14])
+    20.0
+    """
+    pop_mean = mean(data)
+    ss = 0
+    for x in data:
+        ss += (x-pop_mean)**2
+    return ss/len(data)
+
+def variance_s(data):
+    """Returns the sample variance.
+
+    >>> variance_s([9,8,5,1,1])
+    14.2
+    """
+    pop_mean = mean(data)
+    ss = 0
+    for x in data:
+        ss += (x-pop_mean)**2
+    return ss/(len(data)-1)
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
