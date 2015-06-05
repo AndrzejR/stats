@@ -1,5 +1,7 @@
 """This is the main module with a lot of statistical functions."""
 
+from math import sqrt
+
 def mean(data):
     """Returns the mean of data.
 
@@ -58,8 +60,8 @@ def sum_of_squares(data):
     >>> sum_of_squares([1,2,6])
     14.0
     """
-    mean = sum(data)/len(data)
-    return sum((x-mean)**2 for x in data)
+    m = mean(data)
+    return sum((x-m)**2 for x in data)
 
 def variance_p(data):
     """Returns the population variance.
@@ -67,7 +69,6 @@ def variance_p(data):
     >>> variance_p([1,3,5,7,14])
     20.0
     """
-    pop_mean = mean(data)
     return sum_of_squares(data)/len(data)
 
 def variance_s(data):
@@ -76,8 +77,15 @@ def variance_s(data):
     >>> variance_s([9,8,5,1,1])
     14.2
     """
-    pop_mean = mean(data)
     return sum_of_squares(data)/(len(data)-1)
+
+def sd_p(data):
+    """Returns the population standard deviation.
+
+    >>> round(sd_p([1,2,6]), 4)
+    2.1602
+    """
+    return sqrt(variance_p(data))
 
 if __name__ == "__main__":
     import doctest
