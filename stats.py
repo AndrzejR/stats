@@ -52,6 +52,15 @@ def median(data):
 def mode(*data):
     raise NotImplementedError
 
+def sum_of_squares(data):
+    """Returns the sum of squared distances from the mean.
+
+    >>> sum_of_squares([1,2,6])
+    14.0
+    """
+    mean = sum(data)/len(data)
+    return sum((x-mean)**2 for x in data)
+
 def variance_p(data):
     """Returns the population variance.
 
@@ -59,10 +68,7 @@ def variance_p(data):
     20.0
     """
     pop_mean = mean(data)
-    ss = 0
-    for x in data:
-        ss += (x-pop_mean)**2
-    return ss/len(data)
+    return sum_of_squares(data)/len(data)
 
 def variance_s(data):
     """Returns the sample variance.
@@ -71,10 +77,7 @@ def variance_s(data):
     14.2
     """
     pop_mean = mean(data)
-    ss = 0
-    for x in data:
-        ss += (x-pop_mean)**2
-    return ss/(len(data)-1)
+    return sum_of_squares(data)/(len(data)-1)
 
 if __name__ == "__main__":
     import doctest
