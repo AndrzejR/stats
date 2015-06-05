@@ -87,6 +87,14 @@ def sd_p(data):
     """
     return sqrt(variance_p(data))
 
+def sd_s(data):
+    """Returns the sample standard deviation of the data.
+
+    >>> round(sd_s([0,2,4,8]), 4)
+    3.4157
+    """
+    return sqrt(variance_s(data))
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
