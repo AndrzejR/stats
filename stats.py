@@ -95,6 +95,17 @@ def sd_s(data):
     """
     return sqrt(variance_s(data))
 
+def box_plot(data):
+    raise NotImplementedError
+
+def z_score(x, mean, sd):
+    """Return the z-score given the datapoint, mean, and standard deviation.
+
+    >>> round(z_score(83,82.2,5), 2)
+    0.16
+    """
+    return (x-mean)/sd
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
