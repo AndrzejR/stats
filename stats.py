@@ -1,6 +1,6 @@
 """This is the main module with a lot of statistical functions."""
 
-from math import sqrt
+from math import sqrt, ceil
 
 def mean(data):
     """Returns the mean of data.
@@ -40,6 +40,8 @@ def median(data):
     >>> median()
     Traceback (most recent call last):
     TypeError: median() missing 1 required positional argument: 'data'
+    >>> median(range(10))
+    4.5
     """
     try:
         data = sorted(list(data))
@@ -63,40 +65,37 @@ def sum_of_squares(data):
     m = mean(data)
     return sum((x-m)**2 for x in data)
 
-def variance_p(data):
+def pvar(data):
     """Returns the population variance.
 
-    >>> variance_p([1,3,5,7,14])
+    >>> pvar([1,3,5,7,14])
     20.0
     """
     return sum_of_squares(data)/len(data)
 
-def variance_s(data):
+def svar(data):
     """Returns the sample variance.
 
-    >>> variance_s([9,8,5,1,1])
+    >>> svar([9,8,5,1,1])
     14.2
     """
     return sum_of_squares(data)/(len(data)-1)
 
-def sd_p(data):
+def psd(data):
     """Returns the population standard deviation.
 
-    >>> round(sd_p([1,2,6]), 4)
+    >>> round(psd([1,2,6]), 4)
     2.1602
     """
-    return sqrt(variance_p(data))
+    return sqrt(pvar(data))
 
-def sd_s(data):
+def ssd(data):
     """Returns the sample standard deviation of the data.
 
-    >>> round(sd_s([0,2,4,8]), 4)
+    >>> round(ssd([0,2,4,8]), 4)
     3.4157
     """
-    return sqrt(variance_s(data))
-
-def box_plot(data):
-    raise NotImplementedError
+    return sqrt(svar(data))
 
 def z_score(x, mean, sd):
     """Return the z-score given the datapoint, mean, and standard deviation.
@@ -106,6 +105,40 @@ def z_score(x, mean, sd):
     """
     return (x-mean)/sd
 
+def box_plot(data):
+    """Doesn't do much atm..."""
+    raise NotImplementedError
+    Q2 = median(data)
+    Q1 = median(data[:len(data)/2])
+    Q3 = median(data[len(data)/2:])
+
+# bug - what about the median for even sets?
+def quantile(data, q, k):
+    """Returns the k-th q-quantile of data.
+
+    Uses the inclusive, Tukey's method.
+    >>> quantile([1,2,3,4,5], 2, 1)
+    3
+    >>> quantile(range(10), 4, 1)
+    2
+    >>> quantile(range(10), 4, 3)
+    7
+    >>> quantile(range(9), 4, 1)
+    2
+    >>> quantile(range(9), 4, 3)
+    6
+    """
+    rank = ceil((len(data)/q) * k)
+    return data[rank-1]
+
+def iqr(data):
+    """Return the Inter Quartile Range of the data.
+
+    >>> iqr(range(10))
+    5
+    """
+    return quantile(data, 4, 3) - quantile(data, 4, 1)
+
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+    doctest.testmod(verbose=True)
