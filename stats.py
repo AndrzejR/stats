@@ -1,6 +1,7 @@
 """This is the main module with a lot of statistical functions."""
 
 from math import sqrt, ceil
+import random
 
 def mean(data):
     """Returns the mean of data.
@@ -138,6 +139,34 @@ def iqr(data):
     5
     """
     return quantile(data, 4, 3) - quantile(data, 4, 1)
+
+
+# how well does s approximate sigma depending on sample size?
+
+def gen_dataset(size=100000, max=1000):
+    dataset = []
+    for _ in range(size):
+        dataset.append(random.randint(1,max))
+    return dataset
+
+def get_samples(dataset, size=20, number=1000):
+    samples = []
+    for _ in range(number):
+        samples.append(random.sample(dataset, size))
+    return samples
+
+def calc_app():
+    data = gen_dataset()
+    mu = mean(data)
+    sigma = psd(data)
+    for sample_size in range(2, 31):
+        samples = get_samples(data, size=sample_size)
+        ssds = map(ssd, samples)
+        differences = []
+        for sample_sd in ssds:
+            differences.append(sigma - sample_sd)
+        average_diff = mean(differences)
+        print('sample size = ' + str(sample_size) + ', average difference = ' + str(average_diff))
 
 if __name__ == "__main__":
     import doctest
