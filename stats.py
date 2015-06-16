@@ -140,6 +140,30 @@ def iqr(data):
     """
     return quantile(data, 4, 3) - quantile(data, 4, 1)
 
+def factorial(n):
+    """Return the factorial of a natural number.
+
+    >>> factorial(0)
+    1
+    >>> factorial(5)
+    120
+    """
+    if n <= 1:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+def permute(n, k):
+    """Return the number of possible permutations of k from n.
+
+    >>> permute(4, 4)
+    24
+    >>> permute(5, 2)
+    20
+    >>> permute(6, 1)
+    6
+    """
+    return int(factorial(n)/factorial(n-k))
 
 # how well does s approximate sigma depending on sample size?
 
