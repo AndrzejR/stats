@@ -54,8 +54,31 @@ def median(data):
     except IndexError:
         raise TypeError("needs at least one argument")
 
-def mode(*data):
-    raise NotImplementedError
+def mode(data):
+    """Returns the mode of a unimodal distribution.
+
+    >>> mode([1,2,3,4,4,4,4])
+    4
+    >>> mode([-10,-10,-10,13,42,256])
+    -10
+    >>> mode(['a', 'a', 'b', 'b', 'c', 'c', 'a'])
+    'a'
+    """
+    frequencies = {}
+    maximum = 0
+    mode = None
+
+    for x in data:
+        try:
+            frequencies[x] += 1
+        except KeyError:
+            frequencies[x] = 1
+        if frequencies[x] > maximum:
+            mode = x
+            maximum = frequencies[x]
+
+    return mode
+
 
 def sum_of_squares(data):
     """Returns the sum of squared distances from the mean.
@@ -194,4 +217,4 @@ def calc_app():
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod(verbose=True)
+    doctest.testmod(verbose=False)
