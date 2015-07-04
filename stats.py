@@ -188,6 +188,18 @@ def permute(n, k):
     """
     return int(factorial(n)/factorial(n-k))
 
+def combine(n, k):
+    """Return the number of combinations w/o repetition of k from n.
+
+    >>> combine(4, 4)
+    1
+    >>> combine(5, 2)
+    10
+    >>> combine(6, 1)
+    6
+    """
+    return int(permute(n, k)/factorial(k))
+
 # how well does s approximate sigma depending on sample size?
 
 def gen_dataset(size=100000, max=1000):
