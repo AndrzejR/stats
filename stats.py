@@ -200,6 +200,16 @@ def combine(n, k):
     """
     return int(permute(n, k)/factorial(k))
 
+def mad(data):
+    """Returns Mean Absolute Deviation of the data.
+
+    >>> mad([1,2,3,4])
+    1.0
+    >>> mad([2,2,2])
+    0.0
+    """
+    return sum(abs(mean(data)-x) for x in data)/len(data)
+
 # how well does s approximate sigma depending on sample size?
 
 def gen_dataset(size=100000, max=1000):
