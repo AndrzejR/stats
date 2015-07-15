@@ -210,7 +210,7 @@ def mad(data):
     """
     return sum(abs(mean(data)-x) for x in data)/len(data)
 
-def emp_rule(mean, sd, less_than=None):
+def emp_rule(mean, sd, less_than=None, greater_than=None):
     """Khan Academy Empirical Rule solver. Assumes 68-95-99.7
 
     >>> emp_rule(114, 8.2, less_than=122.2)
@@ -219,6 +219,8 @@ def emp_rule(mean, sd, less_than=None):
     99.85
     >>> emp_rule(19.4, 1.3, less_than=20.7)
     84
+    >>> emp_rule(30, 3, greater_than=24)
+    97.5
     """
     if less_than:
         z = int(z_score(less_than, mean, sd))
@@ -226,12 +228,23 @@ def emp_rule(mean, sd, less_than=None):
         if z==3:
             return 99.85
         elif z==2:
-            return 99.5
+            return 97.5
         elif z==1:
             return 84
         elif z==0:
             return 50
 
+    elif greater_than:
+        z = abs(int(z_score(greater_than, mean, sd)))
+
+        if z==3:
+            return 99.85
+        elif z==2:
+            return 97.5
+        elif z==1:
+            return 84
+        elif z==0:
+            return 50
 
 # how well does s approximate sigma depending on sample size?
 
