@@ -221,8 +221,10 @@ def emp_rule(mean, sd, less_than=None, greater_than=None):
     84
     >>> emp_rule(30, 3, greater_than=24)
     97.5
+    >>> emp_rule(17.7, 2.8, greater_than=20.5, less_than=26.1)
+    15.85
     """
-    if less_than:
+    if less_than and not greater_than:
         z = int(z_score(less_than, mean, sd))
 
         if z==3:
@@ -234,7 +236,7 @@ def emp_rule(mean, sd, less_than=None, greater_than=None):
         elif z==0:
             return 50
 
-    elif greater_than:
+    elif greater_than and not less_than:
         z = abs(int(z_score(greater_than, mean, sd)))
 
         if z==3:
@@ -245,6 +247,11 @@ def emp_rule(mean, sd, less_than=None, greater_than=None):
             return 84
         elif z==0:
             return 50
+
+    else:
+        lower_z = int(z_score(greater_than, mean, sd))
+        higher_z = int(z_score(less_than, mean, sd))
+
 
 # how well does s approximate sigma depending on sample size?
 
